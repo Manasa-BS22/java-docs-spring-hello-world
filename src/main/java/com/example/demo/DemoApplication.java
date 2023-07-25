@@ -15,7 +15,7 @@ public class DemoApplication {
 
 	@RequestMapping("/")
 	String sayHello() {
-		System.out.println("Hello, World! from azure");
-		return "Hello World! from azure";
+		System.out.println("Hello, World! from azure for az-204 testing");
+		return "Hello World! from azure for az-204 testing";
 	}
 }
