@@ -1,7 +1,7 @@
 package src.main.java.com.example.controller;
 
-import src.main.java.com.example.demo.RequestMapping;
-import src.main.java.com.example.demo.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ANNTraderController {
