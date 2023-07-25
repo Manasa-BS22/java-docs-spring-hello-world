@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'ANNTrader'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2CA02BB8E0CA4CE4A449BCDE3834C2BC }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_EAF899958A144A728A34AFA1B9080861 }}
           package: '*.jar'
