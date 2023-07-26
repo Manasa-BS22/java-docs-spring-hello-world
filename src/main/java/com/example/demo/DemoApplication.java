@@ -5,12 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.ANNTraderService;
 import com.example.demo.model.Product;
+
 
 @SpringBootApplication
 @RestController
@@ -26,18 +31,18 @@ public class DemoApplication {
 
 	@GetMapping("/test")
 	String sayHello() {
-		return "Hello World from search!";
+		return "Hello World from anntrader!";
 	}
 
 	@GetMapping("/product")
 	public List<Product> getProduct()   
 	{  
-	//finds all the products
+	//finds all the products  
 	List<Product> products = annTraderService.findAll();  
 	//returns the product list  
 	return products;  
 	}  
-
+	
 	@GetMapping(value = "/apparelproduct")
 	public List<Product> getApparelProduct()   
 	{  
@@ -87,7 +92,4 @@ public class DemoApplication {
 			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());  
 	return products;  
 	} 
-
-
-
 }
