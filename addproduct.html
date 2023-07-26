@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link href="css/editproduct.css" rel="stylesheet" />
+</head>
+<body>
+<script>
+
+function updateProduct(){
+	
+	var productid = document.getElementById("productid").value;
+	var name = document.getElementById("productname").value;
+	var price = document.getElementById("price").value;
+	var description = document.getElementById("description").value;
+	var type = document.getElementById("type").value;
+	
+	  
+	
+	fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/addProduct', {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+        body: JSON.stringify({
+    		"productid": productid,
+    		"name": name,
+    		"price": price,
+    		"description": description,
+    		"type": type
+    	})
+    }).then(data => {
+ 		console.log("added "+data);
+ 	});
+	
+	alert("Added Successfully");
+	window.location.href="index.html";
+	
+	
+}</script>
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Product Picture</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img class="img-account-profile rounded-circle mb-2" src="https://anntraderstorage.blob.core.windows.net/anntradercontainer/sporting image.jpg" alt="">
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                    <!-- Profile picture upload button-->
+                    <button class="btn btn-primary" type="button">Upload new image</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Product Details</div>
+                <div class="card-body">
+                    <form>
+                        <!-- Form Group (username)-->
+                        <div class="col-md-6">
+                                <label class="small mb-1" for="productid">Product ID</label>
+                                <input class="form-control" id="productid" type="text"  value="product ID">
+                            </div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Product Name</label>
+                            <input class="form-control" id="productname" type="text" value="Product Name">
+                        </div>
+                        <!-- Form Row-->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (first name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="price">Price</label>
+                                <input class="form-control" id="price" type="text"  value="price">
+                            </div>
+                            <!-- Form Group (last name)-->
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="description">Description</label>
+                                <input class="form-control" id="description" type="text"  value="description">
+                            </div>
+                            <div class="col-md-3">
+                                <label class="small mb-1" for="type">Product type</label>
+                                <input class="form-control" id="type" type="text"  value="Apparel/Sporting">
+                            </div>
+                        </div>
+                        <div><ul></ul></div>
+                        <!-- Save changes button-->
+                        <button class="btn btn-outline-dark" type="button" onclick="updateProduct();">Add Product</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
