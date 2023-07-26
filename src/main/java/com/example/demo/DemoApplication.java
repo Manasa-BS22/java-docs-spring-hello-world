@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,10 @@ import com.example.demo.service.ANNTraderService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import com.azure.messaging.servicebus.ServiceBusClientBuilder;
+import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusSenderClient;
 import com.example.demo.model.Product;
-
 
 @SpringBootApplication
 @RestController
@@ -101,7 +104,19 @@ public class DemoApplication {
 	public int addProduct(@RequestBody Product addProductRequest)   
 	{  
 	int products = annTraderService.addProduct(addProductRequest.getProductid(), addProductRequest.getName(), 
-			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());  
+			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());
+		ServiceBusSenderClient sender = new ServiceBusClientBuilder()
+		    .connectionString("https://ANNTraderService.servicebus.windows.net/anntraderqueue")
+		    .sender()
+		    .queueName("<< QUEUE NAME >>")
+		    .buildClient();
+		List<ServiceBusMessage> messages = Arrays.asList(
+		    new ServiceBusMessage("Product is added").setMessageId("1"));
+
+		sender.sendMessages(messages);
+
+		// When you are done using the sender, dispose of it.
+		sender.close();
 	return products;  
 	}
 
