@@ -24,9 +24,9 @@ public class DemoApplication {
 	@Autowired  
 	private ANNTraderService annTraderService; 
 
-	@RequestMapping("/test")
+	@GetMapping("/test")
 	String sayHello() {
-		return "Hello World!";
+		return "Hello World from search!";
 	}
 
 	@GetMapping("/product")
@@ -37,5 +37,7 @@ public class DemoApplication {
 	//returns the product list  
 	return products;  
 	}  
+
+
 
 }
