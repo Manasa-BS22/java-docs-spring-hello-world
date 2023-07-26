@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.azure.ANNTrader.model.Product;
+import com.example.demo.model.Product;
 
 public interface ANNTraderService {
 	
