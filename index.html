@@ -1,31 +1,236 @@
-    <!DOCTYPE html>  
-    <html>  
-    <head>  
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Shop Homepage - Start Bootstrap Template</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/homepage.css" rel="stylesheet" />
+    </head>
     
-    </head>  
-    <body>  
-     <script>
+    <style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 20px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+
+    <body>
     
-    async function makeAPICall(){
-      fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/product')
-      .then(res => {
-       return res.json();
-      })
-      .then(data => {
-        console.log(data);
-      	data.forEach(Apparel_Product => {
-            const markup = `<li>${Apparel_Product.product_Name}</li>`;
-            document.querySelector('ul').insertAdjacentHTML('beforeend', markup);
-        });
+    <script>
+    
+    
+    fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/product')
+     	 .then(res => {
+     	  return res.json();
+     	 })
+      	.then(data => {
+      	console.log(data);
+      	let list = document.getElementById("product");
+      	const productarray = [];
+      	
+      	var x = document.createElement("table");
+      	x.setAttribute("id", "myTable");
+  	  	document.body.appendChild(x);
+      	var priceimage = document.createTextNode("PRODUCT IMAGE");
+      	var productName = document.createTextNode("PRODUCT NAME");
+      	var amount = document.createTextNode("AMOUNT");
+      	var description = document.createTextNode("DESCRIPTION");
+      	//var addProduct = document.createTextNode("ADD");
+      	var updateProduct = document.createTextNode("UPDATE");
+      	var deleteProduct = document.createTextNode("DELETE");
+      	
+      	var z10 =  document.createElement("th");
+      	z10.appendChild(priceimage);
+      	var z11 =  document.createElement("th");
+      	z11.appendChild(productName);
+      	var z12 =  document.createElement("th");
+      	z12.appendChild(amount);
+      	var z13 =  document.createElement("th");
+      	z13.appendChild(description);
+      //	var z14 =  document.createElement("th");
+      	//z14.appendChild(addProduct);
+      	var z15 =  document.createElement("th");
+      	z15.appendChild(updateProduct);
+      	var z16 =  document.createElement("th");
+      	z16.appendChild(deleteProduct);
+      	
+      	document.getElementById("myTable").appendChild(z10);
+  	  	document.getElementById("myTable").appendChild(z11);
+  	  	document.getElementById("myTable").appendChild(z12);
+  	  	document.getElementById("myTable").appendChild(z13);
+  	  	//document.getElementById("myTable").appendChild(z14);
+  		document.getElementById("myTable").appendChild(z15);
+  		document.getElementById("myTable").appendChild(z16);
+      	
+         for (i = 0; i < data.length; ++i) {
+        	 
+        	  var y = document.createElement("tr");
+        	  let image = document.createTextNode(data[i].image);
+        	  var name = document.createTextNode(data[i].name);
+        	  var price = document.createTextNode(data[i].price);
+        	  var description = document.createTextNode(data[i].description);
+        	  //var add = document.createTextNode("Add");
+        	  var update = document.createTextNode("Update");
+        	  var deleteb = document.createTextNode("Delete");
+        	  let pid = data[i].productid;
+        	  let pname = data[i].name;
+        	  let pprice = data[i].price;
+        	  let pdescription = data[i].description;
+        	  let imagetext = data[i].image;
+        	  y.setAttribute("id", "myTr");
+        	  document.getElementById("myTable").appendChild(y);
+
+        	  var im = document.createElement("img");
+        	  
+        	   im.setAttribute("src", imagetext);
+        	//  let src = image+"";
+        	  console.log("IMAGE "+imagetext);
+        	 // im.src = src;
+        	  im.setAttribute("alt", "image is not available");
+        	  var z = document.createElement("td");
+        	  z.appendChild(im);
+        	  var z1 =  document.createElement("td");
+        	  z1.appendChild(name);
+        	  var z2 =  document.createElement("td");
+        	  z2.appendChild(price);
+        	  var z3 =  document.createElement("td");
+        	  z3.appendChild(description);
+        	 // var z4 =  document.createElement("td");
+        	  var z5 =  document.createElement("td");
+        	  var z6 =  document.createElement("td");
+        	  
+        	//  var addButton = document.createElement("button");
+        	//  addButton.appendChild(add);
+        	 // z4.appendChild(addButton);
+        	  
+        	  var updateButton = document.createElement("button");
+        	  updateButton.appendChild(update);
+        	  z5.appendChild(updateButton);
+        	  updateButton.setAttribute("id", "editbutton");
+        	  var productobj = pid+","+pname+","+pprice+","+pdescription+","+image;
+        	  console.log("array value "+productobj);
+        	  updateButton.setAttribute("value", productobj);
+        	  updateButton.setAttribute("class","btn btn-outline-dark");
+        	  updateButton.setAttribute("onclick", "callUpdate(value);");
+        	  
+        	  var deleteButton = document.createElement("button");
+        	  deleteButton.appendChild(deleteb);
+        	  z6.appendChild(deleteButton);
+        	  deleteButton.setAttribute("id","deletebutton");
+        	  deleteButton.setAttribute("value", pid);
+        	  deleteButton.setAttribute("onclick","callDelete(value);")
+        	  deleteButton.setAttribute("class","btn btn-outline-dark");
+        	  
+        	  document.getElementById("myTable").appendChild(z);
+        	  document.getElementById("myTable").appendChild(z1);
+        	  document.getElementById("myTable").appendChild(z2);
+        	  document.getElementById("myTable").appendChild(z3);
+        	 // document.getElementById("myTable").appendChild(z4);
+        	  document.getElementById("myTable").appendChild(z5);
+        	  document.getElementById("myTable").appendChild(z6);
+         }
       })
       .catch(error => console.log(error));
+    	
+     	 
+    function callUpdate(productobj){
+    	window.location.href="editproduct.html?productobj="+productobj;
     }
+    
+    function addProduct(productobj){
+    	window.location.href="addproduct.html";
+    }
+    
+    
+    function callDelete(productid){
+    	
+    	console.log("productID "+productid);
+    	
+    	fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/deleteproduct?productid='+productid, {method: 'DELETE'})
+    	 .then(res => {
+    	  return res.json();
+    	 })
+     	.then(data => {
+     		console.log("what deleted "+data);
+     	});
+    	
+    	alert("deleted successfully!!!");
+    	window.location.href="index.html";
+    }
+    
+    function searchProduct(){
+    	var searchProd = document.getElementById("prodName").value;
+    	window.location.href="searchProduct.html?productname="+searchProd;
+    }
+    
     </script>
-  
-    <p>Click the following button to see the function in action</p>  
-	<input type = "button" onclick = "makeAPICall()" value = "Display">
-
-    Products :
-    <ul></ul>
-    </body>  
-    </html>  
+    
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" >PRODUCTS PAGE</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="index.html">Home</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="index.html">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="apparelProduct.html">Apparel Products</a></li>
+                                <li><a class="dropdown-item" href="sportingproduct.html">Sporting Products</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    	<div class="col-md-7">
+                                    <input type="text" id="prodName" class="form-control" name="prodName" value="Enter Product Name" >
+                                </div>
+                        <button class="btn btn-outline-dark" type="submit" onclick="searchProduct();">
+                            Search
+                        </button>
+                        <ul></ul>
+                        <button class="btn btn-outline-dark" type="submit" onclick="addProduct();">
+                            Add Product
+                        </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Header-->
+        <header class="bg-dark py-1">
+            <div class="container px-1 px-lg-1 my-1">
+                <div class="text-center text-white">
+                    <h3 class="display-1 fw-bolder">ANN Trader</h3>
+                </div>
+            </div>
+        </header>
+        <!-- Section-->
+        
+        
+        <!-- Footer-->
+        
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+      <!--   <script src="js/scripts.js"></script> -->
+    </body>
+    
+</html>
