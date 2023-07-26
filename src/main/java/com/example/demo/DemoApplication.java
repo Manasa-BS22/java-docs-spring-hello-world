@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.service.ANNTraderService;
 import com.example.demo.model.Product;
 
-import io.swagger.annotations.ApiOperation;
-
 @SpringBootApplication
 @RestController
 @RequestMapping("/ANNTrader/v1")
