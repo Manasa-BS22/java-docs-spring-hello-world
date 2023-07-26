@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.ANNTraderService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import com.example.demo.model.Product;
 
 
 @SpringBootApplication
 @RestController
 @RequestMapping("/ANNTrader/v1")
+@Api(value = "ANNTrader Services")
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -31,10 +36,11 @@ public class DemoApplication {
 
 	@GetMapping("/test")
 	String sayHello() {
-		return "Hello World from anntrader!";
+		return "Hello World from search! swagger";
 	}
 
-	@GetMapping("/product")
+	@GetMapping(value = "/product")
+	@ApiOperation(value = "product")
 	public List<Product> getProduct()   
 	{  
 	//finds all the products  
@@ -44,6 +50,7 @@ public class DemoApplication {
 	}  
 	
 	@GetMapping(value = "/apparelproduct")
+	@ApiOperation(value = "apparelproduct")
 	public List<Product> getApparelProduct()   
 	{  
 	//finds all the products  
@@ -53,6 +60,7 @@ public class DemoApplication {
 	}  
 	
 	@GetMapping(value = "/sportingproduct")
+	@ApiOperation(value = "sportingproduct")
 	public List<Product> getSportingProduct()   
 	{  
 	//finds all the products  
@@ -62,6 +70,7 @@ public class DemoApplication {
 	}  
 	
 	@GetMapping(value = "/searchproduct")
+	@ApiOperation(value = "searchproduct")
 	public List<Product> searchProduct(@RequestParam(required = true, name = "productname") String productname)   
 	{  
 	//finds all the products  
@@ -71,6 +80,7 @@ public class DemoApplication {
 	}  
 	
 	@DeleteMapping(value = "/deleteproduct")
+	@ApiOperation(value = "deleteproduct")
 	public int getdeleteProduct(@RequestParam(required = true, name = "productid") int productID)   
 	{  
 	int products = annTraderService.deleteProduct(productID);  
@@ -78,6 +88,7 @@ public class DemoApplication {
 	}  
 	
 	@PutMapping(value = "/updateProduct")
+	@ApiOperation(value = "updateProduct")
 	public int getupdateProduct(@RequestBody Product updateProductRequest)   
 	{  
 	int products = annTraderService.updateProduct(updateProductRequest.getProductid(), updateProductRequest.getName(), 
@@ -86,10 +97,12 @@ public class DemoApplication {
 	}  
 	
 	@PutMapping(value = "/addProduct")
+	@ApiOperation(value = "addProduct")
 	public int addProduct(@RequestBody Product addProductRequest)   
 	{  
 	int products = annTraderService.addProduct(addProductRequest.getProductid(), addProductRequest.getName(), 
 			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());  
 	return products;  
-	} 
+	}
+
 }
