@@ -72,14 +72,14 @@ public class ANNTraderServiceImpl implements ANNTraderService{
 		
 	}
 	
-	public int addProduct(int productID, String productName, int price, String description, String type) {
+	public int addProduct(int productID, String productName, int price, String description, String type, String image) {
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");  
 		java.util.Date date = new java.util.Date(); 
 		String dateformat = formatter.format(date);
 	    Date sysdate = Date.valueOf(dateformat);
 		
-		String sql = "insert into Product values("+productID+","+price+","+"'image','"+productName+"','"+description+"','"+sysdate+"','"+type+"')";
+		String sql = "insert into Product values("+productID+","+price+",'"+image+"','"+productName+"','"+description+"','"+sysdate+"','"+type+"')";
 		System.out.println("SQL ::"+sql);
 		int rowsUpdated = jdbcTemplate.update(sql);
 		System.out.println("product updated "+rowsUpdated);

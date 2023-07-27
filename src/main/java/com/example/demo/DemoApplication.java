@@ -103,21 +103,18 @@ public class DemoApplication {
 	return products;  
 	}  
 	
-	@PutMapping(value = "/updateProduct")
-	@ApiOperation(value = "updateProduct")
-	public int getupdateProduct(@RequestBody Product updateProductRequest)   
-	{  
-	int products = annTraderService.updateProduct(updateProductRequest.getProductid(), updateProductRequest.getName(), 
-			updateProductRequest.getPrice(), updateProductRequest.getDescription());  
-	return products;  
-	}  
-	
 	@PutMapping(value = "/addProduct")
 	@ApiOperation(value = "addProduct")
 	public int addProduct(@RequestBody Product addProductRequest)   
 	{  
+		String image = "image";
+		if(addProductRequest.getType().equalsIgnoreCase("Sporting")) {
+			image = "https://anntraderstorage.blob.core.windows.net/anntradercontainer/sporting image.jpg";
+		}else {
+			image = "https://anntraderstorage.blob.core.windows.net/anntradercontainer/garment-industry.jpg";
+		}
 	int products = annTraderService.addProduct(addProductRequest.getProductid(), addProductRequest.getName(), 
-			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());
+			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType(), image);
 		ServiceBusSenderClient sender = new ServiceBusClientBuilder()
 		    .connectionString("Endpoint=sb://anntraderservice.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=B3opyhr/nuN0vfc18RKsJvjBP3hF39pDe+ASbFso4XA=")
 		    .sender()
