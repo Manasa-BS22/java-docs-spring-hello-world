@@ -106,7 +106,7 @@ public class DemoApplication {
 	int products = annTraderService.addProduct(addProductRequest.getProductid(), addProductRequest.getName(), 
 			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());
 		ServiceBusSenderClient sender = new ServiceBusClientBuilder()
-		    .connectionString("https://ANNTraderService.servicebus.windows.net")
+		    .connectionString("Endpoint=sb://anntraderservice.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=B3opyhr/nuN0vfc18RKsJvjBP3hF39pDe+ASbFso4XA=")
 		    .sender()
 		    .queueName("anntraderqueue")
 		    .buildClient();
