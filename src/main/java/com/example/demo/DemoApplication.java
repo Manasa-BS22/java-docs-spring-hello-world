@@ -108,7 +108,7 @@ public class DemoApplication {
 		ServiceBusSenderClient sender = new ServiceBusClientBuilder()
 		    .connectionString("https://ANNTraderService.servicebus.windows.net/anntraderqueue")
 		    .sender()
-		    .queueName("<< QUEUE NAME >>")
+		    .queueName("anntraderqueue")
 		    .buildClient();
 		List<ServiceBusMessage> messages = Arrays.asList(
 		    new ServiceBusMessage("Product is added").setMessageId("1"));
