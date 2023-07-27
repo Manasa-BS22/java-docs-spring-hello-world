@@ -76,8 +76,7 @@
 </dependency>
 	<dependency> 
       <groupId>com.azure.spring</groupId>  
-      <artifactId>azure-spring-boot-starter-active-directory</artifactId>  
-      <version>${azure.version}</version> 
+      <artifactId>azure-spring-boot-starter-active-directory</artifactId>   
     </dependency>  
     <!-- Spring OAuth2 Client -->  
     <dependency> 
