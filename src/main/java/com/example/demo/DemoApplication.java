@@ -2,6 +2,7 @@ package com.example.demo;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -21,8 +22,15 @@ import io.swagger.annotations.ApiOperation;
 
 import com.azure.messaging.servicebus.ServiceBusClientBuilder;
 import com.azure.messaging.servicebus.ServiceBusMessage;
+import com.azure.messaging.servicebus.ServiceBusProcessorClient;
+import com.azure.messaging.servicebus.ServiceBusReceivedMessage;
 import com.azure.messaging.servicebus.ServiceBusSenderClient;
+import com.azure.messaging.servicebus.models.ServiceBusReceiveMode;
 import com.example.demo.model.Product;
+import com.azure.messaging.servicebus.ServiceBusReceivedMessageContext;
+import com.azure.messaging.servicebus.ServiceBusErrorContext;
+import com.azure.messaging.servicebus.ServiceBusProcessorClient;
+
 
 @SpringBootApplication
 @RestController
@@ -117,6 +125,53 @@ public class DemoApplication {
 
 		// When you are done using the sender, dispose of it.
 		sender.close();
+		
+		// Sample code that processes a single message which is received in PeekLock mode.
+		Consumer<ServiceBusReceivedMessageContext> processMessage = context -> {
+		    final ServiceBusReceivedMessage message = context.getMessage();
+		    // Randomly complete or abandon each message. Ideally, in real-world scenarios, if the business logic
+		    // handling message reaches desired state such that it doesn't require Service Bus to redeliver
+		    // the same message, then context.complete() should be called otherwise context.abandon().
+		    final boolean success = Math.random() < 0.5;
+		    if (success) {
+		        try {
+		            context.complete();
+		            System.out.println("message from servicebus "+message.getMessageId());
+		        } catch (Exception completionError) {
+		            System.out.printf("Completion of the message %s failed\n", message.getMessageId());
+		            completionError.printStackTrace();
+		        }
+		    } else {
+		        try {
+		            context.abandon();
+		        } catch (Exception abandonError) {
+		            System.out.printf("Abandoning of the message %s failed\n", message.getMessageId());
+		            abandonError.printStackTrace();
+		        }
+		    }
+		};
+
+		// Sample code that gets called if there's an error
+		Consumer<ServiceBusErrorContext> processError = errorContext -> {
+		    System.err.println("Error occurred while receiving message: " + errorContext.getException());
+		};
+
+		// create the processor client via the builder and its sub-builder
+		ServiceBusProcessorClient processorClient = new ServiceBusClientBuilder()
+		                                .connectionString("Endpoint=sb://anntraderservice.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=B3opyhr/nuN0vfc18RKsJvjBP3hF39pDe+ASbFso4XA=")
+		                                .processor()
+		                                .queueName("anntraderqueue")
+		                                .receiveMode(ServiceBusReceiveMode.PEEK_LOCK)
+		                                .disableAutoComplete() // Make sure to explicitly opt in to manual settlement (e.g. complete, abandon).
+		                                .processMessage((java.util.function.Consumer<ServiceBusReceivedMessageContext>) processMessage)
+		                                .processError((java.util.function.Consumer<ServiceBusErrorContext>) processError)
+		                                .disableAutoComplete()
+		                                .buildProcessorClient();
+
+		// Starts the processor in the background and returns immediately
+		processorClient.start();
+		
+		
 	return products;  
 	}
 
