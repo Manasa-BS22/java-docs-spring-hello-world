@@ -106,7 +106,7 @@ public class DemoApplication {
 	int products = annTraderService.addProduct(addProductRequest.getProductid(), addProductRequest.getName(), 
 			addProductRequest.getPrice(), addProductRequest.getDescription(), addProductRequest.getType());
 		ServiceBusSenderClient sender = new ServiceBusClientBuilder()
-		    .connectionString("https://ANNTraderService.servicebus.windows.net/anntraderqueue")
+		    .connectionString("https://ANNTraderService.servicebus.windows.net")
 		    .sender()
 		    .queueName("anntraderqueue")
 		    .buildClient();
