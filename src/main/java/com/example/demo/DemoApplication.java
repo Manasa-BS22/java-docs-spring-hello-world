@@ -102,6 +102,15 @@ public class DemoApplication {
 	int products = annTraderService.deleteProduct(productID);  
 	return products;  
 	}  
+
+	@PutMapping(value = "/updateProduct")
+	@ApiOperation(value = "updateProduct")
+	public int getupdateProduct(@RequestBody Product updateProductRequest)   
+	{  
+	int products = annTraderService.updateProduct(updateProductRequest.getProductid(), updateProductRequest.getName(), 
+			updateProductRequest.getPrice(), updateProductRequest.getDescription());  
+	return products;  
+	}  
 	
 	@PutMapping(value = "/addProduct")
 	@ApiOperation(value = "addProduct")
