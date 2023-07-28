@@ -99,11 +99,19 @@ tr:nth-child(even) {
           	  let pname = data[i].name;
           	  let pprice = data[i].price;
           	  let pdescription = data[i].description;
+				let imagetext = data[i].image;
           	  y.setAttribute("id", "myTr");
           	  document.getElementById("myTable").appendChild(y);
 
-          	  var z = document.createElement("td");
-          	  z.appendChild(image);
+          	  var im = document.createElement("img");
+        	  
+        	   im.setAttribute("src", imagetext);
+        	//  let src = image+"";
+        	  console.log("IMAGE "+imagetext);
+        	 // im.src = src;
+        	  im.setAttribute("alt", "image is not available");
+        	  var z = document.createElement("td");
+        	  z.appendChild(im);
           	  var z1 =  document.createElement("td");
           	  z1.appendChild(name);
           	  var z2 =  document.createElement("td");
