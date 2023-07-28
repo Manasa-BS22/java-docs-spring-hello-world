@@ -36,7 +36,7 @@ tr:nth-child(even) {
     
     <script>
     
-    	fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/apparelproduct')
+    	fetch('https://anntraderapi1.azurewebsites.net/ANNTrader/v1/apparelproduct')
      	 .then(res => {
      	  return res.json();
      	 })
@@ -148,7 +148,7 @@ tr:nth-child(even) {
         	
         	console.log("productID "+productid);
         	
-        	fetch('https://anntraderapi.azurewebsites.net/ANNTrader/v1/deleteproduct?productid='+productid, {method: 'DELETE'})
+        	fetch('https://anntraderapi1.azurewebsites.net/ANNTrader/v1/deleteproduct?productid='+productid, {method: 'DELETE'})
         	 .then(res => {
         	  return res.json();
         	 })
